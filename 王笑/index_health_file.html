@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>医界互联分级诊疗信息系统平台</title>
+<link rel="stylesheet" type="text/css" href="css/font/iconfont.css"/>
+<link rel="stylesheet" type="text/css" href="css/main.css"/>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	//navTab
+	$('.content>div').not(':first').hide();	
+	$('.navCon dl:first').addClass('se');
+	$('.navCon .open').not(':first').hide();
+	$('.navCon dl').click(function(){
+		$(this).addClass('se').siblings().removeClass('se');	
+		$('.content>div').eq($(this).index()).show().siblings().hide();
+		$(this).children('.open').show().parent(this).siblings().children('.open').hide();
+	});	
+	
+	//filenumber
+	$('[name=all]').click(function(){
+		$('[name=filenumber]').prop('checked',$('[name=all]').prop('checked'));
+	});
+	
+	var num = $("[name='filenumber']").size();
+	
+	$("[name='filenumber']").click(function(){
+		var allNum = $("[name='filenumber']:checked").size();
+		$("[name='all']").prop("checked",num==allNum);
+	});
+	
+	//browserTab
+	/*$('.browser_tab_con>form').not(':first').hide();	
+	$('.browser_tab li:first').addClass('se1');
+	$('.browser_tab li').click(function(){
+		$(this).addClass('se1').siblings().removeClass('se1');	
+		$('.browser_tab_con>form').eq($(this).index()).show().siblings().hide();		
+	})*/
+	
+	//li iframe tab
+	$('.browser_tab li:first').addClass('se1');
+	$('.browser_tab_con').attr('src','health_file_1.html');	
+	$('.browser_tab li').click(function(){
+		var link = $(this).attr("link");
+		$(this).addClass('se1').siblings().removeClass('se1');	
+		$('.browser_tab_con').attr('src',link);		
+	})
+	
+	function iFrameHeight() {   
+	var ifm= document.getElementById("iframepage");   
+	var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;   
+	if(ifm != null && subWeb != null) {
+   		ifm.height = subWeb.body.scrollHeight;
+   		ifm.width = subWeb.body.scrollWidth;
+	}   
+	}   			
+	
+});
+</script>
+<script type="text/javascript" language="javascript">
+//iframe zishiyingHeight
+function iFrameHeight() {
+	var ifm= document.getElementById("iframepage");
+	var subWeb = document.frames ? document.frames["iframepage"].document :
+ifm.contentDocument;
+		if(ifm != null && subWeb != null) {
+		ifm.height = subWeb.body.scrollHeight;
+		}
+}
+
+</script> 
+
+</head>
+
+<body>
+<div class="package">
+<div class="index">
+	<div class="top wrapper3">
+    	<h1 class="fl">医界互联分级诊疗信息系统平台</h1>
+        <div class="fr">
+        	<a class="email" href="#2"></a>
+            <span class="line"></span>
+            <a class="user" href="#2">周医生</a>
+            <a class="opentop" href="#2"></a>
+            <span class="line"></span>
+            <a class="quit" href="#2">退出</a>
+        </div>
+    </div>
+    <div class="nav">
+    	<div class="navCon wrapper3">
+        	<dl>
+            	<dt>健康档案</dt>
+                <dd>健康档案</dd>
+                <dd class="open"><img src="images/open2.jpg" alt="" /></dd>
+            </dl>
+            <dl>
+            	<dt>双向转诊</dt>
+                <dd>双向转诊</dd>
+                <dd class="open"><img src="images/open2.jpg" alt="" /></dd>
+            </dl>
+            <dl>
+            	<dt>远程会诊</dt>
+                <dd>远程会诊</dd>
+                <dd class="open"><img src="images/open2.jpg" alt="" /></dd>
+            </dl>
+            <dl>
+            	<dt>人群管理</dt>
+                <dd>人群管理</dd>
+                <dd class="open"><img src="images/open2.jpg" alt="" /></dd>
+            </dl>
+            <dl>
+            	<dt>区域HIS</dt>
+                <dd>区域HIS</dd>
+                <dd class="open"><img src="images/open2.jpg" alt="" /></dd>
+            </dl>
+            <dl>
+            	<dt>分账设置</dt>
+                <dd>分账设置</dd>
+                <dd class="open"><img src="images/open2.jpg" alt="" /></dd>
+            </dl>
+            <dl>
+            	<dt>系统管理</dt>
+                <dd>系统管理</dd>
+                <dd class="open"><img src="images/open2.jpg" alt="" /></dd>
+            </dl>
+        </div>
+    </div>
+	<div class="content">    	
+        <div class="allcenter browser">
+        	<ul class="centerleft browser_tab">
+            	<li link="health_file_1.html"><i class="iconfont">&#xe602;</i>健康档案浏览器</li>
+                <li link="health_file_2.html"><i class="iconfont">&#xe606;</i>个人基本档案管理</li>
+                <li link="health_file_3.html"><i class="iconfont">&#xe604;</i>家庭档案管理</li>
+                <li link="health_file_4.html"><i class="iconfont">&#xe600;</i>体检信息</li>
+                <li link="health_file_5.html"><i class="iconfont">&#xe605;</i>预防接种管理</li>
+                <li link="health_file_6.html"><i class="iconfont">&#xe601;</i>传染病报告管理</li>
+            </ul>
+            <iframe src="" class="centerright browser_tab_con" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" height=100% id="iframepage" name="iframepage" onLoad="iFrameHeight()" ></iframe>
+        </div>
+        <div class="wrapper3 detailed">
+        	<dl>
+            	<dt><img src="images/iconfont/fllow1.png" alt=""></dt>
+                <dd>患者跟踪</dd>
+            </dl>
+            <dl>
+            	<dt><img src="images/iconfont/out1.png" alt=""></dt>
+                <dd>转出管理</dd>
+            </dl>
+            <dl>
+            	<dt><img src="images/iconfont/in1.png" alt=""></dt>
+                <dd>转入功能</dd>
+            </dl>            
+            <p class="empty"></p>
+        </div>
+        <div class="wrapper3 detailed">
+        	<p class="continued">正在建设中</p>
+            <p class="empty"></p>
+        </div>
+        <div class="wrapper3 detailed">
+        	<dl>
+            	<dt><img src="images/iconfont/gravida.png" alt=""></dt>
+                <dd>孕产妇健康管理</dd>
+            </dl>
+            <dl>
+            	<dt><img src="images/iconfont/baby.png" alt=""></dt>
+                <dd>儿童健康档案管理</dd>
+            </dl>
+            <dl>
+            	<dt><img src="images/iconfont/hypertension.png" alt=""></dt>
+                <dd>高血压患者管理</dd>
+            </dl>
+            <dl>
+            	<dt><img src="images/iconfont/diabetes.png" alt=""></dt>
+                <dd>2型糖尿病患者管理</dd>
+            </dl>
+            <dl>
+            	<dt><img src="images/iconfont/psychosis.png" alt=""></dt>
+                <dd>重性精神病患者管理</dd>
+            </dl>                      
+            <p class="empty"></p>
+        </div>
+        <div class="wrapper3 detailed">
+        	<p class="continued">正在建设中</p>
+            <p class="empty"></p>
+        </div>
+        <div class="wrapper3 detailed">    
+            <p class="empty"></p>
+        </div>        
+        <div class="wrapper3 detailed">    
+            <p class="empty"></p>
+        </div>
+    </div>
+    <p class="copy">Copyright&nbsp;&copy;&nbsp;2016</p>
+</div>
+</div>
+</body>
+</html>
