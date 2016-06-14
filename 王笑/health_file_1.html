@@ -4,18 +4,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>健康档案浏览器</title>
 <link rel="stylesheet" type="text/css" href="css/main.css"/>
+<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<body>
-<form class="info" action="#" method="post">
+<body ng-app='App' ng-controller="myCtrl">
+<div class="info" action="#" method="post">
     <select class="choose" name="inquiry">
-        <option value="number" selected="selected">档案编号</option>
-        <option value="name">姓名</option>
-        <option value="IDcard">身份证号</option>
-        <option value="phone">联系电话</option>
+        <option value="archive_number" selected="selected">档案编号</option>
+        <option value="patient_name">姓名</option>
+        <option value="paperwork_number">身份证号</option>
+        <option value="link_tele">联系电话</option>
     </select>
     <input class="choose choose2" type="text" name="" value="" />
-    <input class="choose3" type="submit" name="" value="" />
+    <input class="choose3" type="submit" name="" value="" ng-click="getNewPage(1)"/>
     <a class="return" href="#2">返回</a>
     <table cellspacing="1">
     <colgroup>
@@ -41,127 +42,103 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>196613</td>
-            <td>啦啦啦</td>
-            <td>男性</td>
-            <td>150430188888888888</td>
-            <td>1888-88-88</td>
-            <td>123-9878-8989</td>
-            <td>有效</td>
-            <td>2016-05-18</td>
-        </tr>
-        <tr>
-            <td>196613</td>
-            <td>啦啦啦</td>
-            <td>男性</td>
-            <td>150430188888888888</td>
-            <td>1888-88-88</td>
-            <td>123-9878-8989</td>
-            <td>有效</td>
-            <td>2016-05-18</td>
-        </tr>
-        <tr>
-            <td>196613</td>
-            <td>啦啦啦</td>
-            <td>男性</td>
-            <td>150430188888888888</td>
-            <td>1888-88-88</td>
-            <td>123-9878-8989</td>
-            <td>有效</td>
-            <td>2016-05-18</td>
-        </tr>
-        <tr>
-            <td>196613</td>
-            <td>啦啦啦</td>
-            <td>男性</td>
-            <td>150430188888888888</td>
-            <td>1888-88-88</td>
-            <td>123-9878-8989</td>
-            <td>有效</td>
-            <td>2016-05-18</td>
-        </tr>
-        <tr>
-            <td>196613</td>
-            <td>啦啦啦</td>
-            <td>男性</td>
-            <td>150430188888888888</td>
-            <td>1888-88-88</td>
-            <td>123-9878-8989</td>
-            <td>有效</td>
-            <td>2016-05-18</td>
-        </tr>
-        <tr>
-            <td>196613</td>
-            <td>啦啦啦</td>
-            <td>男性</td>
-            <td>150430188888888888</td>
-            <td>1888-88-88</td>
-            <td>123-9878-8989</td>
-            <td>有效</td>
-            <td>2016-05-18</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>   
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>   
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>   
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>                        
+        <tr ng-repeat="p in peoples">
+            <td>{{p.archive_number}}</td>
+            <td>{{p.patient_name}}</td>
+            <td>{{p.sex}}</td>
+            <td>{{p.paperwork_number}}</td>
+            <td>{{p.birth_date}}</td>
+            <td>{{p.link_tele}}</td>
+            <td>{{p.status}}</td>
+            <td>{{p.create_date}}</td>
+        </tr>                       
     </tbody>
     <tfoot>
-            <tr>
+            <tr ng-show="page_show">
                 <td colspan="8">                                    
                     <div class="fr">
-                        <a class="first" href="#">共<span>21</span>条记录，</a>
-                        <a class="second" href="#">1/5页</a>
-                        <a class="pagenumber" href="#2">1</a>
-                        <a class="pagenumber" href="#2">2</a>
-                        <a class="pagenumber" href="#2">3</a>
-                        <a class="pagenumber" href="#2">4</a>
-                        <a class="pagenumber" href="#2">5</a>
+                        <a  class="first" href="#">共<span>{{allCount}}</span>条记录，</a>
+                        <a class="second" href="#">{{now}}/{{pages}}页</a>
+                        <a ng-repeat="p in shownum" ng-click="getNewPage(p)" class="pagenumber">{{p}}</a>
                         <span class="span01">转到第</span>
-                        <input class="text" type="text" name="" value="5" />
+                        <input class="text" type="text" name="" value="{{to}}" />
                         <span class="span02">页</span>
-                        <input class="goto" type="submit" name="" value="前往" />
+                        <input class="goto" type="submit" name="" value="前往" ng-click="getNewPage(to)"/>
                     </div>
                 </td>
             </tr>
         </tfoot>    
     </table>
-</form>
+</div>
+<script src="js/angular.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var Conf={};
+	Conf.url_getPage = "http://yizheshijia.com/data/home/index/init";
+	
+	
+	var App = angular.module('App',[]);
+	App.controller('myCtrl', function($scope, $http) {
+		$scope.to=1;
+	  //页码展示
+	  $scope.showPage = function(){
+	  	if($scope.pages*1>1){
+	  		$scope.page_show=true;
+	  	}else{
+	  		$scope.page_show=false;
+	  	}
+	  	shownum = $scope.pages; //显示页码
+	  	(shownum>5)&&(shownum=5);
+	  	$scope.shownum = new Array(shownum);
+	     $.each($scope.shownum, function(k,v) {
+	     	if($scope.now+4<$scope.pages){
+	     		$scope.shownum[k]=$scope.now+k;
+	     	}else{
+	     		$scope.shownum[k]=1+k;
+	     	}
+	     	
+	     });
+	  };
+	  //翻页
+		$scope.getNewPage=function(now){
+			(now>$scope.pages)&&(now=$scope.pages);
+			var data = {};data.w={};
+			var v = $(".choose2").val();
+			var s = v.replace(/\s/g, "");
+			if(s){
+				data.w.k=$(".choose").val();//选择条件类型
+			    data.w.v=s;//选择条件类型的值
+			}
+			data.w.p=now;//展示第几页内容      
+//			$.ajax({
+//			  url:Conf.url_getPage,
+//			  method: 'POST',  
+//			  data:data,
+//			  dataType:'json',
+//			  success:function(res){
+//			    //...
+//			      $scope.peoples = res.data;
+//			      $scope.now = now;
+//			      $scope.allCount = res.allCount;
+//			      $scope.pages = Math.ceil($scope.allCount/2);
+//			      $scope.showPage();
+//			  }
+//			});
+			
+			
+			
+			$http.post(Conf.url_getPage,data).success(function(res){
+		      $scope.peoples = res.data;
+		      $scope.now = now;
+		      $scope.allCount = res.allCount;
+		      $scope.pages = Math.ceil($scope.allCount/2);
+		      $scope.showPage();
+		  }).error(function(data) {
+		      alert("请求失败");
+		  });
+		};
+	 //初始化  默认第一页
+	   $scope.getNewPage(1);
+	});
+</script>
 </body>
 </html>
