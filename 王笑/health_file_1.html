@@ -3,10 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>健康档案浏览器</title>
-<link rel="stylesheet" type="text/css" href="css/main.css"/>
-<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-</head>
 
+<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script> 
+</head>
 <body ng-app='App' ng-controller="myCtrl">
 <div class="info" action="#" method="post">
     <select class="choose" name="inquiry">
@@ -59,9 +59,9 @@
                     <div class="fr">
                         <a  class="first" href="#">共<span>{{allCount}}</span>条记录，</a>
                         <a class="second" href="#">{{now}}/{{pages}}页</a>
-                        <a ng-repeat="p in shownum" ng-click="getNewPage(p)" class="pagenumber">{{p}}</a>
+                        <a ng-repeat="p in shownum" ng-click="getNewPage(p.num)" class="pagenumber {{p.status}}">{{p.num}}</a>
                         <span class="span01">转到第</span>
-                        <input class="text" type="text" name="" value="{{to}}" />
+                        <input class="text" type="text" name=""  ng-model="to" />
                         <span class="span02">页</span>
                         <input class="goto" type="submit" name="" value="前往" ng-click="getNewPage(to)"/>
                     </div>
@@ -74,12 +74,11 @@
 <script type="text/javascript">
 	var Conf={};
 	Conf.url_getPage = "http://yizheshijia.com/data/home/index/init";
-	
-	
 	var App = angular.module('App',[]);
 	App.controller('myCtrl', function($scope, $http) {
 		$scope.to=1;
-	  //页码展示
+		
+	  //***页码展示
 	  $scope.showPage = function(){
 	  	if($scope.pages*1>1){
 	  		$scope.page_show=true;
@@ -90,17 +89,27 @@
 	  	(shownum>5)&&(shownum=5);
 	  	$scope.shownum = new Array(shownum);
 	     $.each($scope.shownum, function(k,v) {
-	     	if($scope.now+4<$scope.pages){
-	     		$scope.shownum[k]=$scope.now+k;
+	     	$scope.shownum[k]={};
+	     	if($scope.now*1<3){
+	     		$scope.shownum[k].num=k+1;
 	     	}else{
-	     		$scope.shownum[k]=1+k;
+	     		if($scope.now*1+4>$scope.pages){
+	     			$scope.shownum[k].num=$scope.pages*1+k-4;
+	     		}else{
+		     		$scope.shownum[k].num=$scope.now*1+k-2;
+	     		}
+	     	} 
+	     	if($scope.shownum[k].num==$scope.now){
+	     		$scope.shownum[k].status='active';
 	     	}
-	     	
 	     });
 	  };
-	  //翻页
+	  
+	  
+	  //***翻页
 		$scope.getNewPage=function(now){
-			(now>$scope.pages)&&(now=$scope.pages);
+			(now>$scope.pages)&&($scope.to=now=$scope.pages);
+			(now<1)&&($scope.to=now=1);
 			var data = {};data.w={};
 			var v = $(".choose2").val();
 			var s = v.replace(/\s/g, "");
@@ -109,36 +118,181 @@
 			    data.w.v=s;//选择条件类型的值
 			}
 			data.w.p=now;//展示第几页内容      
-//			$.ajax({
-//			  url:Conf.url_getPage,
-//			  method: 'POST',  
-//			  data:data,
-//			  dataType:'json',
-//			  success:function(res){
-//			    //...
-//			      $scope.peoples = res.data;
-//			      $scope.now = now;
-//			      $scope.allCount = res.allCount;
-//			      $scope.pages = Math.ceil($scope.allCount/2);
-//			      $scope.showPage();
-//			  }
-//			});
-			
-			
-			
 			$http.post(Conf.url_getPage,data).success(function(res){
 		      $scope.peoples = res.data;
 		      $scope.now = now;
 		      $scope.allCount = res.allCount;
-		      $scope.pages = Math.ceil($scope.allCount/2);
+		      $scope.pages = Math.ceil($scope.allCount/10);
 		      $scope.showPage();
 		  }).error(function(data) {
 		      alert("请求失败");
 		  });
 		};
-	 //初始化  默认第一页
+		
+	 //***初始化  默认第一页
 	   $scope.getNewPage(1);
 	});
 </script>
+
+
+
+
+<style type="text/css">
+	@charset "utf-8";
+/* CSS Document */
+*{margin:0; padding:0;}
+html,body{ width:100%; height:100%; font-size:12px;/* font-size:62.5%;*/ font-family:"Microsoft Yahei"; color:#000; background:#FFF; width:100%;}ul li,ol li{list-style:none;}img{border:none;}
+a{ text-decoration:none;outline:none; blr:expression(this.onFocus=this.blur()); color:#000;}
+.clearfix:after{content:""; display:block; clear:both; height:0; line-height:0; visibility:hidden;}.clearfix{zoom:1;}/*解决ie6的兼容性问题*/
+textarea{ resize:none;}h1,h2,h3,h4,h5,h6{font-weight: normal;}
+.fl{float:left;}.fr{float:right;}.clear{ clear:both;}
+.package{ width:1349px; margin:0 auto;}
+/*login*/
+.login{ /*background:#f6f7f9; */width:100%; height:100%;}
+.wrapper1{ width:930px; margin:0 auto;}
+.login .logo{ padding-top:125px; }
+.login #myform{ width:359px; margin-top:100px;}
+.login .register{ float:right; font-size:14px; margin-top:44px; margin-right:60px; color:#9d9d9d; width:82px; height:36px; border:1px solid #9d9d9d; border-radius:3px; line-height:36px; text-align:center;}
+.login .title{ clear:both;}
+#myform{ background:url(../images/loginbg.jpg) no-repeat left bottom; width:359px; height:460px;}
+#myform input{ text-indent:1em;}
+.login .title{ text-align:center; margin-bottom:22px; font-size:20px;}
+.login .ml40{ margin-left:40px;}
+.login p.ml40{ height:40px; line-height:40px; font-size:14px;}
+.login .name,#myform .mima{ border:none; background:url(../images/username.jpg) no-repeat; width:274px; height:36px; line-height:36px;}
+.login .recaptcha{ border:none; background:url(../images/recaptcha.jpg) no-repeat; width:137px; height:36px; line-height:36px;}
+.login .recaptcha2{ float:right; margin-right:46px;}
+.login .forget{ display:inline-block; margin:14px 0 20px 145px;}
+.dengL{ background:#3f9d2a; width:82px; height:36px; line-height:36px; text-align:center; color:#fff; font-size:14px; border:none; margin-left:60px; margin-top:44px;}
+.login .remember{ margin-top:14px; display:inline-block; margin-left:40px; padding-left:20px; background:url(../images/remember0.jpg) no-repeat; border:none;}
+.login .se{/* margin-left:40px; padding-left:20px; */background:url(../images/remember.jpg) no-repeat; border:none;}
+/*register*/
+.register{ background:#f6f7f9; width:100%; height:100%;}
+.wrapper2{ width:512px; margin:0 auto;}
+.hosDoctor,.perDoctor{ display:inline-block; width:160px; height:43px; border:1px solid #8cbc3e; border-radius:2px; line-height:43px; text-align:center; font-size:16px; color:#8a8c8a; margin-top:120px;}
+.hosDoctor{ margin-left:68px; margin-right:76px;}
+.regForm{ margin-top:30px;}
+.register input{ text-indent:1em;}
+.register .name input,.register .title input,.register .hospital input{ background:url(../images/regname.jpg) no-repeat; border:none; width:176px; height:43px; line-height:43px;}
+.register .sex input,.register .telephone input,.register .department input{ background:url(../images/regsex.jpg) no-repeat; border:none; width:159px; height:43px; line-height:43px;}
+.register .email input,.register .adress input{ background:url(../images/regemail.jpg) no-repeat; border:none; width:408px; height:43px; line-height:43px;}
+.register .submit{ width:150px; height:45px; line-height:45px; background:#84b63a; border:none; text-align:center; font-size:16px; color:#fff; border-radius:3px;}
+.register p{ float:left; margin-left:20px; display:inline; font-size:16px; color:#8a8c8a;}
+.register .name,.register .sex{ margin-bottom:10px;}
+.register .email,.register .adress,.register .title,.register .telephone{ margin-bottom:20px;}
+.register .massage{ margin:14px 26px 30px 40px; font-size:14px;}
+.register .submit{ margin-left:180px;}
+
+/*index*/
+.wrappernav{ width:61.22%; margin:0 auto;}
+.wrapper3{ width:1050px; margin:0 auto;}
+.wrapper4{ width:1050px; margin:0 auto; margin-left:218px;}
+.index .top{ height:70px; line-height:70px; background:#fff;}
+.index .top h1{ font-size:18px; font-weight:bold;}
+.index .email{ float:left; background:url(../images/iconfont/email.png) no-repeat left center;width:14px; height:70px; margin-right:26px;}
+.index .top .line{ float:left; background:url(../images/line.jpg) no-repeat left center; width:1px ; height:70px;}
+.index .user{ float:left; background:url(../images/iconfont/user.png) no-repeat left center; height:70px; padding-left:22px; margin-left:14px;}
+.index .opentop{ float:left; background:url(../images/iconfont/open.jpg) no-repeat left center; width:10px; height:70px; margin-left:6px; margin-right:10px;}
+.index .quit{ float:left; background:url(../images/iconfont/quit.png) no-repeat left center; height:70px; padding-left:24px; margin-left:18px;}
+.nav{ background:url(../images/navBg.jpg) repeat-x left center; width:100%; height:120px; }
+.index .nav .navCon dl{ float:left; width:150px; height:120px; text-align:center; color:#fff; font-size:16px; position:relative; cursor:pointer;}
+.navCon dl dt{ text-indent:-9999px; width:100%; height:70px;}
+.navCon dl dd{ margin-top:14px; font-weight:bold;}
+.navCon dl dd img{ position:absolute; left:43%; top:100%;}
+.navCon dl:nth-child(1) dt{ background:url(../images/iconfont/health.png) no-repeat center bottom;}
+.navCon dl:nth-child(2) dt{ background:url(../images/iconfont/double.png) no-repeat center bottom;}
+.navCon dl:nth-child(3) dt{ background:url(../images/iconfont/far.png) no-repeat center bottom;}
+.navCon dl:nth-child(4) dt{ background:url(../images/iconfont/people.png) no-repeat center bottom; }
+.navCon dl:nth-child(5) dt{ background:url(../images/iconfont/HIS.png) no-repeat center bottom; }
+.navCon dl:nth-child(6) dt{ background:url(../images/iconfont/split.png) no-repeat center bottom;}
+.navCon dl:nth-child(7) dt{ background:url(../images/iconfont/sys.png) no-repeat center bottom;}
+
+.navCon dl.se{background:url(../images/navHBg2.jpg) repeat-x left center;}
+.navCon dl.se dd{ color:#40cab3;}
+.navCon dl.se:nth-child(1) dt{ background:url(../images/iconfont/health1.png) no-repeat center bottom;}
+.navCon dl.se:nth-child(2) dt{ background:url(../images/iconfont/double1.png) no-repeat center bottom;}
+.navCon dl.se:nth-child(3) dt{ background:url(../images/iconfont/far1.png) no-repeat center bottom;}
+.navCon dl.se:nth-child(4) dt{ background:url(../images/iconfont/people1.png) no-repeat center bottom; }
+.navCon dl.se:nth-child(5) dt{ background:url(../images/iconfont/HIS1.png) no-repeat center bottom; }
+.navCon dl.se:nth-child(6) dt{ background:url(../images/iconfont/split1.png) no-repeat center bottom;}
+.navCon dl.se:nth-child(7) dt{ background:url(../images/iconfont/sys1.png) no-repeat center bottom;}
+
+.index .content{ background:#f3f5f8; padding-top:35px;}
+.index .detailed{ background:#fff;}
+.index .detailed dl{ float:left; width:200px; height:200px; background:#3bc9b1; border-radius:2px; margin-top:30px; text-align:center; color:#fff; font-size:18px; margin-left:50px;}
+.index .detailed dl dd{ cursor:pointer;}
+.empty{ clear:both;}
+.copy{ clear:both; background:#f3f5f8; text-align:center; height:50px; line-height:50px; font-size:14px;}
+.detailed{/*padding:20px;*/ height:490px;}
+.index .detailed dl dt{/* height:120px;*/ margin-bottom:22px; margin-top:50px;}
+
+/*archives_health*/
+.allcenter{background:#f3f5f8; 
+display:inline-flex;
+ display:-webkit-inline-flex;
+  display:-moz-inline-flex;
+   display:-ms-inline-flex;
+    display:-o-inline-flex;}
+.allcenter ul{ width:218px; vertical-align:top; background:#f3f5f8; float:left; height:100%;}
+.allcenter ul li{font-size:14px; padding:13px 0; cursor:pointer;}
+.allcenter ul li i{ margin:0 10px 0 70px;}
+.centerright{width:1050px; background:#fff; float:left; padding-bottom:60px;}
+.info .choose{ float:left; width:160px; height:34px; line-height:32px; border:1px solid #ccc; margin:7px 7px 7px 18px;}
+.info .choose2{ text-indent:0.5em;}
+.info .choose3{float:left; width:110px; height:34px; background:url(../images/choose3.jpg) no-repeat left center; border:none; margin-top:7px; margin-left:10px;}
+.info tr{ font-size:14px;vertical-align:top; }
+tr td,tr th{ border:1px solid #eee; /* overflow:hidden; white-space:nowrap; text-overflow:ellipsis;*/} 
+.info a.return{ background:url(../images/return.jpg) no-repeat left center; padding-left:20px; line-height:50px; float:right; margin-right:20px;}
+tr th{ height:44px; line-height:44px;}
+tr td{ height:40px; line-height:40px;}
+table{ border-collapse:collapse; width:98%; margin:0 auto; text-align:center;}
+.info thead{ background:#3fcab3; color:#fff;}
+.centerleft li.se1{ color:#07387e; background-color:#fff;}
+.centerright tfoot tr td{ height:80px; line-height:80px; background:#eff3f8;}
+.centerright tfoot .all label{ cursor:pointer;}
+tfoot .all{ color:#4288c1;}
+tfoot .all input{ opacity:0;}
+tfoot .first span{ color:#4288c1;}
+.handle{ clear:both; /*width:1026px;*/ height:60px; line-height:60px; background:#eff3f8; border:1px solid #e9e9e9; margin-left:12px; padding-left:10px; margin-bottom:13px; font-size:14px;overflow:hidden; white-space:nowrap;}
+.handle a{ float:left; width:86px; height:32px; background-color:#40cab3; color:#fff; line-height:32px; font-size:14px; margin-right:13px; margin-top:15px; text-indent:37px;}
+a.pagenumber{cursor: pointer; display:inline-block; min-width:24px; height:22px; line-height:22px; border:1px solid #dadee3;}
+a.pagenumber:hover,a.active{ background:#4288c1;}
+input.text{ display:inline-block; width:24px; height:22px; line-height:22px; border:1px solid #dadee3; text-align:center;}
+input.goto{ width:38px; height:22px; line-height:22px; text-align:center; color:#fff; background:#4288c1; margin-left:14px; margin-right:24px; border:none;}
+tfoot .span01{ margin-left:12px;}
+.handleicon{ margin-left:18px; margin-right:8px;}
+.continued{ font-size:24px; text-align:center; vertical-align:middle; color:#bbb; line-height:400px;}
+
+/*icon bg*/
+.icon-add{ background:url(../images/iconfont/icon-add.png) no-repeat 10px center; background-size:18px 18px;}
+.icon-pen{ background:url(../images/iconfont/icon-pen.png) no-repeat 10px center; background-size:18px 18px;}
+.icon-delete{ background:url(../images/iconfont/icon-delete.png) no-repeat 10px center; background-size:18px 18px;}
+.icon-off{ background:url(../images/iconfont/icon-off.png) no-repeat 10px center; background-size:18px 18px;}
+.icon-reset{ background:url(../images/iconfont/icon-reset.png) no-repeat 10px center; background-size:18px 18px;}
+
+/*double diagnosis*/
+
+/*crowd*/
+
+/*set up*/
+.loginClass input{ width:126px; height:36px; border:1px solid #cececf; text-indent:0.5em;}
+.dotype{margin-left:18px;}
+.dotype select{ width:134px; height:36px; border:1px solid #cececf;}
+.sysquery,.sysreset{ width:96px; height:36px; line-height:36px; text-align:center; color:#fff; border:none;}
+.dotime{ margin-left:15px;}
+.dotime input{ width:120px; height:36px; border:1px solid #cececf; text-indent:0.5em;background:url(../images/date.png) no-repeat right center #fff; background-size:18% 54%; background-position:95px center;}
+.sysquery{ background:#41cbb3; margin:0 12px 0 32px;}
+.sysreset{ background:#67d5c2;}
+
+/*alert*/
+.addnew_healthfile{ font-size:14px; width:800px; margin:0 auto;border:1px solid #f00;}
+.addnew_left{ width:620px; background:#fefef2;}
+.base_massage_title{ font-size:26px; color:#1a1a1a; text-align:center; padding:35px 0;}
+.newadd p span{ width:140px; text-align:right; display:inline-block; margin-right:13px;}
+.mass_input{background:#ffffff;border:1px solid #e4e7ec;border-radius:2px;width:378px;height:46px; line-height:46px; padding-left:0.5em; font-size:14px;}
+.newadd>p{ margin-bottom:20px; display:inline-block;}
+.marginR{ padding-right:10px;border-right:1px solid #e4e7ec; height:45px; display:inline-block;}
+.live{ display:inline-block; padding-right:120px; border-right:1px solid #e4e7ec; height:45px;}
+</style>
 </body>
 </html>
