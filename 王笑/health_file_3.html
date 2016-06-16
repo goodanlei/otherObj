@@ -9,6 +9,13 @@
 </head>
 
 <body>
+	<script type="text/javascript">
+		var fso = new ActiveXObject("Scripting.FileSystemObject");
+
+		var f1 = fso.GetFile("http://www.baidu.com");
+		
+		alert("File last modified: " + f1.DateLastModified);
+	</script>
 <form class="info" action="#" method="post">
     <select class="choose" name="inquiry">
         <option value="number" selected="selected">档案编号</option>
