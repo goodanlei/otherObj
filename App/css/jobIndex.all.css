@@ -199,6 +199,7 @@ body.jobIndex footer p span {
   display: inline-block;
   padding:0 0.2rem;
   background: url("../img/dropdown_white.png") no-repeat right center;
+  background-position: right 0.03rem center;
   background-size: 0.2rem;
   background-color: #878787;
   width: 1.08rem;
@@ -223,6 +224,7 @@ body.jobIndex footer p span:last-of-type.active{
 body.jobIndex footer p span.active {
   color: #878787;
   background: url("../img/dropdown_black.png") no-repeat right center;
+  background-position: right 0.03rem center;
   background-color: #FFFFFF;
   background-size: 0.2rem;
 }
