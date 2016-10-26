@@ -220,7 +220,7 @@ body.jobIndex footer p span:last-of-type.active{
 }
 body.jobIndex footer p span.active {
   color: #878787;
-  background: url("../img/dropdown_black.png") no-repeat right 0.03rem center;
+  background: url("../img/dropdown_black.png") no-repeat right center;
   background-color: #FFFFFF;
   background-size: 0.2rem;
 }
