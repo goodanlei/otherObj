@@ -59,7 +59,7 @@ body {
   padding: 0;
   background-color: #EEEEEE;
   font-size: 0.24rem;
-  min-height: 100vh;
+  min-height: 92vh;
 }
 /*.main{
 	margin-top: 1.5rem;
@@ -110,7 +110,6 @@ body.jobIndex article dl dt p {
 }
 body.jobIndex article dl dd {
   margin: 0;
-  height: 1.28rem;
   margin-top: 0.2rem;
   background-color: #FFFFFF;
 }
@@ -120,7 +119,7 @@ body.jobIndex article dl dd:first-of-type {
 body.jobIndex article dl dd p {
   margin: 0;
   padding: 0.15rem 0 0.2rem 0.2rem;
-  color: #000000;
+  color: #000000;  
 }
 body.jobIndex article dl dd p:first-of-type {
   padding: 0.2rem 0 0.15rem 0.2rem;
@@ -199,17 +198,17 @@ body.jobIndex footer p span {
   line-height: 0.85rem;
   display: inline-block;
   padding:0 0.2rem;
-  background: url("../img/dropdown_white.png") no-repeat right 0.03rem center;
+  background: url("../img/dropdown_white.png") no-repeat right center;
   background-size: 0.2rem;
   background-color: #878787;
-  width: 0.98rem;
+  width: 1.08rem;
 }
 body.jobIndex footer p span:first-of-type {
     left: 50%;
     margin-left: -0.64rem;
 }
 body.jobIndex footer p span:nth-of-type(3) {
-  width: 1.5rem;
+  width: 1.3rem;
 }
 body.jobIndex footer p span:last-of-type {
   width: 1.65rem;
@@ -821,14 +820,14 @@ body.mistakesCollection footer p span {
   background: url("../img/dropdown_white.png") no-repeat right 0.03rem center;
   background-size: 0.2rem;
   background-color: #878787;
-  width: 0.98rem;
+  width: 1.08rem;
 }
 body.mistakesCollection footer p span:first-of-type {
     left: 50%;
     margin-left: -0.64rem;
 }
 body.mistakesCollection footer p span:nth-of-type(3) {
-  width: 1.5rem;
+  width: 1.3rem;
 }
 body.mistakesCollection footer p span:last-of-type {
   width: 1.65rem;
@@ -1027,5 +1026,168 @@ body.mistakesCollection .List .con > ul li {
 /*=======================================================mui自定义css样式 end===========================================*/
 input[tkt='tk']{
 	background-color: white
+}
+/*加载刷新样式*/
+@font-face {
+	font-family: Muiicons;
+	font-weight: 400;
+	font-style: normal;
+	src: url(../fonts/mui.ttf) format('truetype');
+}
+
+.mui-scroll-wrapper {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	width: 100%
+}
+.mui-scroll {
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0)
+}
+.mui-pull-bottom-pocket,
+.mui-pull-top-pocket {
+	position: absolute;
+	left: 0;
+	display: block;
+	visibility: hidden;
+	overflow: hidden;
+	width: 100%;
+	height: 50px
+}
+.mui-pull {
+	font-weight: 700;
+	position: absolute;
+	right: 0;
+	bottom: 10px;
+	left: 0;
+	text-align: center;
+	color: #777
+}
+.mui-icon {
+	font-family: Muiicons;
+	font-size: 24px;
+	font-weight: 400;
+	font-style: normal;
+	line-height: 1;
+	display: inline-block;
+	text-decoration: none;
+	-webkit-font-smoothing: antialiased
+}
+.mui-pull-loading {
+	margin-right: 10px;
+	-webkit-transition: -webkit-transform .4s;
+	transition: transform .4s;
+	-webkit-transition-duration: 400ms;
+	transition-duration: 400ms;
+	vertical-align: middle
+}
+.mui-icon-pulldown:before {
+	content: '\e588'
+}
+.mui-pull-caption {
+	font-size: 15px;
+	line-height: 24px;
+	position: relative;
+	display: inline-block;
+	overflow: visible;
+	margin-top: 0;
+	vertical-align: middle
+}
+.mui-table-view {
+	position: relative;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-left: 0;
+	list-style: none;
+}
+.mui-table-view:before {
+	position: absolute;
+	right: 0;
+	left: 0;
+	height: 0px;
+	content: '';
+	-webkit-transform: scaleY(.5);
+	transform: scaleY(.5);
+	background-color: #fff;
+	top: -1px;
+}
+.mui-table-view:after {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 0px;
+	content: '';
+	-webkit-transform: scaleY(.5);
+	transform: scaleY(.5);
+	background-color: #fff;
+}
+.mui-visibility {
+	visibility: visible!important
+}
+.mui-pull-bottom-pocket,
+.mui-pull-top-pocket {
+	position: absolute;
+	left: 0;
+	display: block;
+	visibility: hidden;
+	overflow: hidden;
+	width: 100%;
+	height: 50px
+}
+
+.mui-plus-pullrefresh .mui-pull-bottom-pocket,
+.mui-plus-pullrefresh .mui-pull-top-pocket {
+	display: none;
+	visibility: visible
+}
+.mui-loading .mui-spinner {
+	display: block;
+	margin: 0 auto
+}
+
+.mui-spinner {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	-webkit-transform-origin: 50%;
+	transform-origin: 50%;
+	-webkit-animation: spinner-spin 1s step-end infinite;
+	animation: spinner-spin 1s step-end infinite
+}
+
+.mui-spinner:after {
+	display: block;
+	width: 100%;
+	height: 100%;
+	content: '';
+	background-image: url('data:image/svg+xml;charset=utf-8,<svg viewBox=\'0 0 120 120\' xmlns=\'http://www.w3.org/2000/svg\' xmlns:xlink=\'http://www.w3.org/1999/xlink\'><defs><line id=\'l\' x1=\'60\' x2=\'60\' y1=\'7\' y2=\'27\' stroke=\'%236c6c6c\' stroke-width=\'11\' stroke-linecap=\'round\'/></defs><g><use xlink:href=\'%23l\' opacity=\'.27\'/><use xlink:href=\'%23l\' opacity=\'.27\' transform=\'rotate(30 60,60)\'/><use xlink:href=\'%23l\' opacity=\'.27\' transform=\'rotate(60 60,60)\'/><use xlink:href=\'%23l\' opacity=\'.27\' transform=\'rotate(90 60,60)\'/><use xlink:href=\'%23l\' opacity=\'.27\' transform=\'rotate(120 60,60)\'/><use xlink:href=\'%23l\' opacity=\'.27\' transform=\'rotate(150 60,60)\'/><use xlink:href=\'%23l\' opacity=\'.37\' transform=\'rotate(180 60,60)\'/><use xlink:href=\'%23l\' opacity=\'.46\' transform=\'rotate(210 60,60)\'/><use xlink:href=\'%23l\' opacity=\'.56\' transform=\'rotate(240 60,60)\'/><use xlink:href=\'%23l\' opacity=\'.66\' transform=\'rotate(270 60,60)\'/><use xlink:href=\'%23l\' opacity=\'.75\' transform=\'rotate(300 60,60)\'/><use xlink:href=\'%23l\' opacity=\'.85\' transform=\'rotate(330 60,60)\'/></g></svg>');
+	background-repeat: no-repeat;
+	background-position: 50%;
+	background-size: 100%
+}
+.mui-pull-bottom-pocket {
+	position: relative;
+	bottom: 0;
+	height: 40px
+}
+.mui-hidden {
+	display: none!important
+}
+.mui-icon-pulldown:before {
+	content: '\e588'
+}
+.mui-block {
+	display: block!important
+}
+.mui-pull-bottom-pocket .mui-pull-loading {
+	visibility: hidden
 }
 

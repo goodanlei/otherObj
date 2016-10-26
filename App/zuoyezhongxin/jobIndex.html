@@ -5,19 +5,15 @@
 		<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no, target-densityDpi=device-dp" />
 		<meta name="format-detection" content="telephone=no" />
 		<title>作业中心</title>
-		<!--<script src="../common/tool/traceur.js"></script>
-		<script src="../common/tool/BrowserSystem.js"></script>
-		<script src="../common/tool/bootstrap.js"></script>-->
 		<link rel="stylesheet" type="text/css" href="../css/jobIndex.all.css"/>
 		<script src="../common/jquery-1.11.2.min.js"></script>
 		<script src="../common/setviewport.js"></script>
-		<script src="../common/zepto.js"></script>	
 		<script src="../common/jquery.raty.min.js"></script>
+		<script src="../common/tool/mui.min.js"></script>
 	</head>
-	<body class="jobIndex" id="pullLoad">
+	<body class="jobIndex">
 		<!--上拉刷新-->
-    	<div class="loading reload" ><span>正在刷新...</span></div>
-		<div class="main">
+		<div class="main" id="pullrefresh">
 			<article>
 				<dl>
 					<dt>
@@ -191,72 +187,66 @@
 		    	
 		    </div>
 		</div>
-		<script src="../js/jobIndex.js"></script>
 		<script type="text/javascript">
-		
-		$(function(){
-		    var startY,endY;
-		    var scrollTopVal=0; 
-//		    document.getElementById("pullLoad").addEventListener("touchstart", touchStart, false);
-//		    document.getElementById("pullLoad").addEventListener("touchmove", touchMove, false);
-//		    document.getElementById("pullLoad").addEventListener("touchend", touchEnd, false);  
-		    $('#pullLoad').on('touchstart',touchStart);
-	        $('#pullLoad').on('touchmove',touchMove);
-	        $('#pullLoad').on('touchend',touchEnd);
-		    
-		    function touchStart(event){
-		        var touch = event.originalEvent.targetTouches[0];
-		        startY = touch.pageY;
-		    }   
-		    var moveStatus = 0;
-		    function touchMove(event){
-		     var touch = event.originalEvent.targetTouches[0];
-		     endY = (startY-touch.pageY);
-		        if(endY>=10&&moveStatus==0){
-		        	moveStatus=1;
-		        	//注意  ：  當前節點的高度
-		        	//滑動到低端
-		            var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
-		            if($(document).height()-75 <= totalheight){
-		                $(".bottoLoading").show();
-		                //ajax
-//		                $.ajax({
-//		                    url:"date.json",
-//		                    type:'get',
-//		                    success:function(date){
-//		                        flag=false;
-//		                    },
-//		                    error:function(){
-//		                 		$(".loading").show();
-//		                        flag=false;
-//		                    }
-//		                });
-		                
-		                //模拟效果    可刪除。。。
-		              setTimeout(function(){
-		              	$(".bottoLoading").hide();
-		              	moveStatus=0;
-		              },500);
-		            }
-		            
-		       }else if(endY<=-10&&moveStatus==0){
-		        	moveStatus=1;
-		        	if(parseFloat($(window).scrollTop())===0){
-		        		$('.reload').show();
-		        	}
-		        	setTimeout(function(){
-		              	$(".reload").hide();
-		              	moveStatus=0;
-		              },500);
-		            
-		        }else{
-		        	moveStatus=0;
-		        }
-		    }
-		    function touchEnd(event){
-		    	moveStatus=0;		    
-		    }
-		});
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			
+			function pulldownRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var addList = [1,2,3,4,5]
+					var html = addList.map(function(){
+						return `<dd>
+						<p>
+						   <span class="tit">good</span>
+						   <span class="time">完成时间：<time>2016-03-15</time></span>
+						   <span class="yipigai">已批改</span></p>
+						   <!--状态值   weitijiao yipigai yitijiao-->
+						<p>
+							<span>作业类型 : <b class="type">测试</b></span>
+							<span class="degree">难度系数:
+								
+								<span data-score="3" class="xing"></span>
+							</span>
+						</p>
+					</dd>`
+					}).join('');
+					$('article dl').append(html)
+				}, 1500);
+			}
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
 		</script>
+		<script src="../js/jobIndex.js"></script>
 	</body>
 </html>
