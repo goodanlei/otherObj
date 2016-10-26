@@ -213,6 +213,7 @@ body.jobIndex footer p span:nth-of-type(3) {
 body.jobIndex footer p span:last-of-type {
   width: 1.65rem;
   background-position: right 0.1rem center;
+  border-right: 10rem solid #000;
   padding-right: 0.3rem;
 }
 body.jobIndex footer p span:last-of-type.active{
