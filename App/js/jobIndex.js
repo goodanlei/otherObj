@@ -1,7 +1,5 @@
 (function($){
-
-	
-	
+    document.ondragstart = document.onselectstart = function(){return false;};
 	/*jobIndex start*/
 	//底部選項卡切换
 	$(".jobIndex footer,.mistakesCollection footer").on("tap",'span',function(){
