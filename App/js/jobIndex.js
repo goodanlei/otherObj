@@ -4,7 +4,7 @@
 	
 	/*jobIndex start*/
 	//底部選項卡切换
-	$(".jobIndex footer,.mistakesCollection footer").on("click",'span',function(){
+	$(".jobIndex footer,.mistakesCollection footer").on("tap",'span',function(){
 		$(this).css({left: 'initial',marginLeft: 0});
 		if(!this.Status){
 			//$(this).nextAll().hide();
@@ -93,7 +93,7 @@
 		this.Status=!this.Status;
 	});
 	//選中操作
-	$(".jobIndex .List .con,.mistakesCollection .List .con").on("click",'span,li',function(){
+	$(".jobIndex .List .con,.mistakesCollection .List .con").on("tap",'span,li',function(){
 		$(".List").hide();
 		$('footer p .active')[0].Status=!$('footer p .active')[0].Status;
 		if($(this).attr('class')=='active'){
@@ -109,12 +109,12 @@
 	
 	/*jobView start*/
 	//底部題號頁內跳轉
-//	$(".jobView footer,.mistakesCollection footer").on("click",'a',function(){
+//	$(".jobView footer,.mistakesCollection footer").on("tap",'a',function(){
 //		$("footer a").removeClass('active');
 //		$(this).addClass('active');
 //	});
 	//答案解析開合
-	$(".jobView article,.mistakesCollection article").on("click",".daan .r",function(){
+	$(".jobView article,.mistakesCollection article").on("tap",".daan .r",function(){
 		$(this).next().toggle();
 	});
 	/*jobView end*/
@@ -130,7 +130,7 @@
 	  	}
 	});
 	//跳轉
-	$(".jobIndex article").on("click","dd",function(){
+	$(".jobIndex article").on("tap","dd",function(){
 		if($(this).attr('type')=='renwu'){
 			window.location.href="taskView.html";
 		}else{
